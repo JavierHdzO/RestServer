@@ -12,8 +12,8 @@ const router = Router();
 
 router.get('/', getApi);
 router.post('/', posttApi);
-router.delete('/', deleteApi);
-router.put('/', putApi);
+router.delete('/:id', deleteApi);
+router.put('/:id', putApi);
 
 
 module.exports = router;
