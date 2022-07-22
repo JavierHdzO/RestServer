@@ -3,9 +3,6 @@ const { request, response } = require('express');
 const User = require('./../models/usuario');
 
 
-
-
-
 const getApi = async (req = request, res = response) => {
 
     const { limit = 5, to = 0 } = req.query;

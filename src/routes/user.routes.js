@@ -2,13 +2,19 @@ const { Router } = require('express');
 const { check } = require('express-validator');
 
 /** Middlewares */
-const { validSlots } = require('../middlewares/valid-slots');
-const { validateJwt } = require('../middlewares/validate-JWT');
+const { validSlots,
+        validateJwt,
+        checkRole,
+        isAdminRole 
+    } = require('../middlewares');
+
 
 const { 
         roleValidator, 
         existsEmailValidator, 
-        existsUserByID } = require('../helpers/db-validator');
+        existsUserByID 
+
+    } = require('../helpers/db-validator');
 
 
 /** Controllers */
@@ -16,7 +22,9 @@ const {
         getApi,
         posttApi,
         deleteApi,
-        putApi } = require('../controllers/user.controllers');
+        putApi 
+
+    } = require('../controllers/user.controllers');
 
 
 
@@ -52,6 +60,8 @@ router.put('/:id', [
 
 router.delete('/:id', [
     validateJwt,
+    // isAdminRole,  -> this middleware verify if user is admin
+    checkRole('ADMIN_ROLE', 'VENTAS_ROLE'),
     check('id', 'ID is not valid').isMongoId(),
     check('id').custom( existsUserByID ),
     validSlots,
