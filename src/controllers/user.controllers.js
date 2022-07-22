@@ -72,13 +72,12 @@ const putApi = async (req = request, res) => {
 const deleteApi = async (req, res) => {
     const { id } = req.params;
 
-    /** Delete from Database */
-    //const user = await User.findByIdAndDelete(id);
+    const { authUser } = req;
 
-    /** Delete user but hidding your reference */
+    const user = await User.findByIdAndUpdate(id, { status: false });
 
-    const user = await User.findByIdAndUpdate(id, { status: false })
-
+    console.log(authUser);
+    
     res.json(
         user
     );

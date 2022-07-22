@@ -14,6 +14,7 @@ class Server {
 
         //Paths
         this.apiPath = '/api/users';
+        this.apiAuth = '/api/auth';
 
 
         // DB connectio
@@ -46,6 +47,7 @@ class Server {
     }
 
     routes(){
+        this.app.use(this.apiAuth, require('../routes/auth.routes') );
         this.app.use(this.apiPath, require('../routes/user.routes') );
     }
 

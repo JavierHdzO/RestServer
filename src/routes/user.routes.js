@@ -2,7 +2,8 @@ const { Router } = require('express');
 const { check } = require('express-validator');
 
 /** Middlewares */
-const { validSlots } = require('../middlewares/valid-slots')
+const { validSlots } = require('../middlewares/valid-slots');
+const { validateJwt } = require('../middlewares/validate-JWT');
 
 const { 
         roleValidator, 
@@ -50,9 +51,10 @@ router.put('/:id', [
 ] ,putApi);
 
 router.delete('/:id', [
+    validateJwt,
     check('id', 'ID is not valid').isMongoId(),
     check('id').custom( existsUserByID ),
-    validSlots
+    validSlots,
 ],deleteApi);
 
 
