@@ -5,7 +5,8 @@ const { existsEmailValidator } =  require('../helpers/db-validator');
 const { validSlots } = require('../middlewares/valid-slots');
 
 const {
-        login} = require( '../controllers/auth.controllers' );
+        login,
+        googleSignIn } = require( '../controllers/auth.controllers' );
 
 
 const router = Router();
@@ -15,6 +16,11 @@ router.post('/login',[
     check('password', 'Password is obligatory').not().isEmpty(),
     validSlots
 ], login);
+
+router.post('/google',[
+    check('idToken', "Google's idToken is obligatory").not().isEmpty(),
+    validSlots
+], googleSignIn);
 
 
 
