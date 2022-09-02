@@ -99,9 +99,8 @@ const googleSignIn = async( req = request, res =  response) => {
         })
 
     } catch (error) {
-        console.log( error );
         return res.status(400).json({
-            msg:'Token is missing',
+            msg:'Token is missing or invalid',
             ok: false
 
         })

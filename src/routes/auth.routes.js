@@ -12,13 +12,13 @@ const {
 const router = Router();
 
 router.post('/login',[
-    check('email', 'Email is obligatory').isEmail(),
-    check('password', 'Password is obligatory').not().isEmpty(),
+    check('email', 'Email is required').isEmail(),
+    check('password', 'Password is required').not().isEmpty(),
     validSlots
 ], login);
 
 router.post('/google',[
-    check('idToken', "Google's idToken is obligatory").not().isEmpty(),
+    check('idToken', "Google's idToken is required").not().isEmpty(),
     validSlots
 ], googleSignIn);
 

@@ -41,8 +41,8 @@ router.get('/',[
 ],getApi);
 
 router.post('/', [
-    check('name', "name is obligatory").not().isEmpty(),
-    check('password', 'password is obligatory'),
+    check('name', "name is required").not().isEmpty(),
+    check('password', 'password is required'),
     check('password', 'Must be at least 8 characters').isLength({ min: 8 }),
     check('email', "Email is not valid").isEmail(),
     // check('role', 'Role: It is valid role ').isIn(['ADMIN_ROLE', 'USER_ROLE']),

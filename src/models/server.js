@@ -13,8 +13,13 @@ class Server {
         this.port = process.env.PORT;
 
         //Paths
-        this.apiPath = '/api/users';
-        this.apiAuth = '/api/auth';
+        this.paths = {
+            auth:       '/api/auth',
+            users:      '/api/users',
+            categories: '/api/Categories'
+        }
+
+        
 
 
         // DB connectio
@@ -47,8 +52,9 @@ class Server {
     }
 
     routes(){
-        this.app.use(this.apiAuth, require('../routes/auth.routes') );
-        this.app.use(this.apiPath, require('../routes/user.routes') );
+        this.app.use(this.paths.auth, require('../routes/auth.routes') );
+        this.app.use(this.paths.users, require('../routes/user.routes') );
+        this.app.use(this.paths.categories, require('../routes/categories.routes'))
     }
 
 
