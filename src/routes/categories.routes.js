@@ -1,7 +1,7 @@
 const { Router } = require('express');
 const { check } = require('express-validator');
 
-const { existsEmailValidator } =  require('../helpers/db-validator');
+const { existsEmailValidator, existsCategoryByID, existsCategoryByName } =  require('../helpers/db-validator');
 const { validSlots, validateJwt, isAdminRole, categoryExists } = require('../middlewares');
 
 
@@ -20,14 +20,13 @@ const {
 const router = Router();
 
 //Obtener todas las categorias
-router.get('/',[
-    validateJwt
-],getCategories);
+router.get('/',getCategories);
 
 //Obtener una categoria por ID
 router.get('/:id',[
     validateJwt,
-    check('id').isMongoId(),
+    check('id', 'ID is invalid').isMongoId(),
+    check('id').custom(existsCategoryByID),
     validSlots
 ],getCategory );
 
@@ -44,8 +43,9 @@ router.put('/:id',[
     check('id', 'ID can not empty').not().isEmpty(),
     check('id', 'ID invalid').isMongoId(),
     check('name', 'name param is required').not().isEmpty(),
-    validSlots,
-    categoryExists
+    check('id').custom(existsCategoryByID),
+    check('name').custom(existsCategoryByName),
+    validSlots
 ],updateCategory);
 
 // Delete una categoria - sp;p si es admin
@@ -53,7 +53,8 @@ router.put('/:id',[
 router.delete('/:id',[
     validateJwt,
     isAdminRole,
-    check('id', 'ID Invlid').isMongoId(),
+    check('id', 'ID is Invlid').isMongoId(),
+    check('id').custom(existsCategoryByID),
     validSlots
 ], deleteCategory);
 

@@ -97,10 +97,11 @@ const updateCategory = async( req = request, res = response) => {
 
     const { id } = req.params;
     const name = req.body.name.toUpperCase();
+    const user = req.uid;
 
     try {
         
-        const updateCategory = await Category.findByIdAndUpdate(id, {name});
+        const updateCategory = await Category.findByIdAndUpdate(id, {name, user}, {new: true});
 
         if( !updateCategory ) return res.status(401).json({
             msg:`Doesnt exist category with ${id} ID`

@@ -1,6 +1,5 @@
 
-const Role = require('../models/role');
-const User = require('../models/usuario');
+const {Role, User, Category, Product} = require('../models');
 
 const roleValidator = async(role = '') => {
     const roleExists = await Role.findOne( { role } );
@@ -29,11 +28,44 @@ const existsUserByID = async(id) => {
 };
 
 
+const existsCategoryByID = async(id) => {
+    const category = await Category.findById(id);
+
+    if( !category ) throw new Error('Category no exists');
+};
+
+
+const existsCategoryByName = async( name  = '') => {
+
+    name  = name.toUpperCase();
+
+    const category = await Category.findOne({name});
+
+    if( category ) throw new Error(`${name} category is alredy registered`);
+        
+}
+
+
+const existsProductByID = async( id ) => {
+
+    const product = await Product.findById(id);
+
+    if( !product ) throw new Error(`Proudct with ${id} is not registered`);
+        
+}
+
+
+
+
+
 
 
 
 module.exports = {
     roleValidator,
     existsEmailValidator,
-    existsUserByID
+    existsUserByID,
+    existsCategoryByID,
+    existsCategoryByName,
+    existsProductByID
 };
